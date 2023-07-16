@@ -9,6 +9,7 @@ import java.util.Map;
 
 /**
  * 映射器代理类
+ * 实现 InvocationHandler 接口
  */
 public class MapperProxy<T> implements InvocationHandler, Serializable {
     private static final long serialVersionUID = -6424540398559729838L;

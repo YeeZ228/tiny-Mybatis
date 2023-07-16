@@ -45,18 +45,24 @@ public class ApiTest {
         System.out.println(result);
     }
 
+    /**
+     * 构建一个简单的 Mapper映射器注册机，用于扫描包路径自动地创建映射器的代理，并提供相应的对DefaultSqlSession包装和使用
+     */
     @Test
     public void test_MapperProxyFactory_02() {
+        // MapperRegistry扫描一个包路径，将路径下符合的接口，全部注册成MapperProxy，并将这些代理类写入到缓存中
         // 注册mapper
         MapperRegistry registry = new MapperRegistry();
         registry.addMappers("mybatis.test.dao");
 
+        // 后续需要某个接口对应的映射器时，直接从缓存中拿出来使用
         // 从SqlSession工厂获取Session
         SqlSessionFactory sqlSessionFactory = new DefaultSqlSessionFactory(registry);
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        // 获取映射器对象
+        // 获取映射对象
         IUserDao userDao = sqlSession.getMapper(IUserDao.class);
+
         String s = userDao.queryUsername("101");
         System.out.println(s);
 
