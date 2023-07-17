@@ -1,7 +1,8 @@
 package mybatis.session.defaults;
 
-import mybatis.bingding.MapperProxyFactory;
 import mybatis.bingding.MapperRegistry;
+import mybatis.mapping.MappedStatement;
+import mybatis.session.Configuration;
 import mybatis.session.SqlSession;
 
 /**
@@ -9,10 +10,10 @@ import mybatis.session.SqlSession;
  * getMapper 通过 MapperRegistry 类获取映射器对象
  */
 public class DefaultSqlSession implements SqlSession {
-    private MapperRegistry mapperRegistry;
+    private Configuration configuration;
 
-    public DefaultSqlSession(MapperRegistry mapperRegistry) {
-        this.mapperRegistry = mapperRegistry;
+    public DefaultSqlSession(Configuration configuration) {
+        this.configuration = configuration;
     }
 
     public <T> T selectOne(String statement) {
@@ -20,10 +21,16 @@ public class DefaultSqlSession implements SqlSession {
     }
 
     public <T> T selectOne(String statement, Object parameter) {
-        return (T) ("你被代理了！" + "方法：" + statement + " 入参： " + parameter);
+        MappedStatement mappedStatement = configuration.getMappedStatement(statement);
+        return (T) ("你被代理了！" + "\n方法：" + statement + "\n入参：" + parameter + "\n待执行SQL：" + mappedStatement.getSql());
     }
 
     public <T> T getMapper(Class<T> type) {
-        return mapperRegistry.getMapper(type, this);
+        return configuration.getMapper(type, this);
     }
+
+    public Configuration getConfiguration() {
+        return configuration;
+    }
+
 }
