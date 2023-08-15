@@ -17,12 +17,13 @@ import java.io.Reader;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.PriorityQueue;
 
 public class ApiTest {
     private Logger logger = LoggerFactory.getLogger(ApiTest.class);
-
     @Test
     public void test_MapperProxyFactory() {
 //        MapperProxyFactory<IUserDao> factory = new MapperProxyFactory<IUserDao>(IUserDao.class);
@@ -32,6 +33,7 @@ public class ApiTest {
 //        IUserDao userDao = factory.newInstance(sqlSession);
 //        String s = userDao.queryUsername("1");
 //        System.out.println(s);
+        PriorityQueue<Object> objects = new PriorityQueue<>();
     }
 
 //    @Test
